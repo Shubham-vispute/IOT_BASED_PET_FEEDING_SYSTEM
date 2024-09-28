@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Pet Feeder</title>
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='images/dog4.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            font-size: 2.5rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 1.2rem;
+            color: #495057;
+        }
+        input[type="time"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feed-time {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 30px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Pet Feeder Schedule</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="pet_name">Pet Name:</label>
+            <input type="text" name="pet_name" value="{{ pet_name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="feed_time_1">Feeding Time 1 (HH:MM):</label>
+            <input type="time" name="feed_time" required>
+        </div>
+
+        <div class="form-group">
+            <label for="feed_time_2">Feeding Time 2 (HH:MM):</label>
+            <input type="time" name="feed_time" required>
+        </div>
+
+        <div class="form-group">
+            <label for="feed_time_3">Feeding Time 3 (HH:MM):</label>
+            <input type="time" name="feed_time">
+        </div>
+
+        <div class="form-group">
+            <label for="feed_time_4">Feeding Time 4 (HH:MM):</label>
+            <input type="time" name="feed_time">
+        </div>
+
+        <button type="submit">Update Schedule</button>
+    </form>
+
+    <div class="feed-time">
+        <h2>Next Feed Time: {{ next_feed_time }}</h2>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Pet Feeder System</p>
+</footer>
+
+<script>
+    function checkFeedingStatus() {
+        fetch('/is_feeding')
+        .then(response => response.json())
+        .then(data => {
+            if (data.feeding) {
+                window.location.reload();
+            }
+        })
+        .catch(error => console.error('Error checking feeding status:', error));
+    }
+
+    setInterval(checkFeedingStatus, 5000);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
