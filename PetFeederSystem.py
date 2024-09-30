@@ -1,3 +1,5 @@
+#Name: Shubham Kishor Vispute
+#ID :  2024HT01026
 import RPi.GPIO as GPIO
 import time
 from luma.core.interface.serial import i2c
